@@ -1,0 +1,16 @@
+library(igraph)
+setwd("~/Dropbox/#PHD/DATA ANALYSIS/R/Egtved Contemporaries")
+#Above is mac wd.For windows use setwd("C:/Users/Lofel/Dropbox/#PHD/DATA ANALYSIS/R/Egtved Contemporaries")
+data <- read.csv("Male per II.csv", header = TRUE, row.names = 1, sep = ";")
+incidencegraph <- graph_from_incidence_matrix(data)
+burial.bp <- bipartite.projection(incidencegraph)
+burial.bp
+
+plot(burial.bp$proj1, vertex.label.color="black", vertex.label.dist=1, vertex.size=5, edge.width = 0.1)
+plot(burial.bp$proj2, vertex.label.color="black", vertex.label.dist=1.5, vertex.size=2)
+cfg1 <- cluster_fast_greedy(burial.bp$proj1)
+cfg2 <- cluster_fast_greedy(burial.bp$proj2)
+dendPlot(cfg1, mode="hclust")
+dendPlot(cfg2, mode="hclust")
+plot(cfg1, burial.bp$proj1)
+plot(cfg2, burial.bp$proj2)
