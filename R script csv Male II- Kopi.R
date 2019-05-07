@@ -14,3 +14,18 @@ dendPlot(cfg1, mode="hclust")
 dendPlot(cfg2, mode="hclust")
 plot(cfg1, burial.bp$proj1)
 plot(cfg2, burial.bp$proj2)
+
+# Get adjacency matrix out of the incidence graph
+# using  get.adjacency(incidencegraph, type=c("both"), attr="NULL", names=TRUE, sparse=FALSE) 
+
+adj_burial <- get.adjacency(incidencegraph, type= "both")
+adj_burial
+
+# convert the matrix (dgcMatrix)) into a dataframe, need the tidyverse library for pipes
+install.packages("tidyverse")
+library(tidyverse)
+
+a_burial <- adj_burial %>% 
+  as.matrix %>%
+  as.data.frame
+write.csv(a_burial,"output/Adjacency.csv") # generates a csv with adjacency in "output" folder in your WD
